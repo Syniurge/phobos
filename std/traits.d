@@ -4287,7 +4287,7 @@ template BaseTypeTuple(A)
 template BaseClassesTuple(T)
 if (is(T == class))
 {
-    static if (is(T == Object))
+    static if (is(T == Object) || !BaseTypeTuple!T.length) // CALYPSO
     {
         alias BaseClassesTuple = AliasSeq!();
     }
