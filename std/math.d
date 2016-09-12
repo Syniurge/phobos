@@ -5327,12 +5327,15 @@ unittest
     }
     ensureDefaults();
 
+    version(D_HardFloat)
     {
-        FloatingPointControl ctrl;
-        ctrl.rounding = FloatingPointControl.roundDown;
-        assert(FloatingPointControl.rounding == FloatingPointControl.roundDown);
+        {
+            FloatingPointControl ctrl;
+            ctrl.rounding = FloatingPointControl.roundDown;
+            assert(FloatingPointControl.rounding == FloatingPointControl.roundDown);
+        }
+        ensureDefaults();
     }
-    ensureDefaults();
 
     if(FloatingPointControl.hasExceptionTraps)
     {
@@ -6020,7 +6023,7 @@ ulong getNaNPayload(real x) @trusted pure nothrow @nogc
         // Make it look like an 80-bit significand.
         // Skip exponent, and quiet bit
         m &= 0x0007_FFFF_FFFF_FFFF;
-        m <<= 10;
+        m <<= 11;
     }
     else static if (F.realFormat == RealFormat.ieeeQuadruple)
     {
